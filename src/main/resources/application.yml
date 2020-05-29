@@ -1,1 +1,39 @@
+server:
+  port: 8088
 
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    druid:
+      master:
+        url: jdbc:mysql://127.0.0.1:3306/springData?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=GMT%2B8
+        username: root
+        password: 123456
+      # 初始连接数
+      initial-size: 5
+      # 最大连接池数量
+      max-active: 200
+      # 最小连接池数量
+      min-idle: 10
+      # 配置获取连接等待超时的时间
+      max-wait: 60000
+      # 打开PSCache，并且指定每个连接上PSCache的大小
+      pool-prepared-statements: true
+      max-pool-prepared-statement-per-connection-size: 20
+      # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      time-between-eviction-runs-millis: 60000
+      # 配置一个连接在池中最小生存的时间，单位是毫秒
+      min-evictable-idle-time-millis: 300000
+      validation-query: SELECT 1
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      # 通过connectProperties属性来打开mergeSql功能；慢SQL记录；config.decrypt=true 加密密码
+      connection-properties: config.decrypt=false;druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000;
+      filter: stat,slf4j,config,wall
+
+
+mybatis:
+  mapperLocations: classpath:mapper/*.xml
+  typeAliasesPackage: com.miaoph.cn.entity
